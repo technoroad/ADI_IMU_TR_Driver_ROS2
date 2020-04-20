@@ -29,11 +29,33 @@ ROS2: dashing
 <span style="color: red; ">TODO</span>
 
 ### How to use
+
+#### Install
+Go to your package directory and clone.
+```
+$ cd [your package directory]
+$ git clone https://bitbucket.org/technoroad/adi_driver2_for_ros2/src/dev/
+```
 #### Build
+Go to your workspace directory and run the build command.  
+```
+$ cd [your workspace directory]
+$ colcon build --symlink-install
+```
+Then set the path.
+```
+$ source ./install/setup.bash
+```
 
-``` $ roslaunch adi_driver adis_rcv_csv.launch ```
-
-You can see the model of ADIS16470 breakout board in rviz panel.
+#### Run
+Execute with the following command.
+```
+$ ros2 launch adi_driver2 adis_rcv_csv.launch.py 
+```
+Then show imu values.
+```
+$ ros2 tocpic echo /imu/data_raw
+```
 
 ### Topics
 - /imu/data_raw (sensor_msgs/Imu)
