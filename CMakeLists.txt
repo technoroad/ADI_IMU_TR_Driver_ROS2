@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(adi_driver2)
+project(adi_imu_tr_driver_ros2)
+
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
@@ -19,7 +20,7 @@ find_package(tf2_ros REQUIRED)
 find_package(diagnostic_msgs REQUIRED)
 
 include_directories(
-  include
+  lib/include
   ${std_msgs_INCLUDE_DIRS}
   ${sensor_msgs_INCLUDE_DIRS}
   ${lifecycle_msgs_INCLUDE_DIRS}
@@ -28,9 +29,9 @@ include_directories(
 )
 
 ### demos
+add_subdirectory(lib)
 add_executable(adis_rcv_csv_node
   src/adis_rcv_csv_node.cpp
-  src/adis_rcv_csv.cpp
   )
 
 ament_target_dependencies(adis_rcv_csv_node 
@@ -39,13 +40,11 @@ ament_target_dependencies(adis_rcv_csv_node
   "tf2_ros"
   "diagnostic_msgs"
 )
+target_link_libraries(adis_rcv_csv_node adis_rcv_csv)
 
-install(DIRECTORY include/
-        DESTINATION include
-)
 
 install(DIRECTORY
-  launch params
+  launch
   DESTINATION share/${PROJECT_NAME}/
 )
 

@@ -21,7 +21,7 @@ Currently supported devices are:
 Support for other sensors is possible by adding a library of sensors.
 
 ### Operating environment
-OS： Ubuntu 18.04 LTS  
+OS： Ubuntu 18.04 LTS
 ROS2: dashing
 
 ### Connection
@@ -34,7 +34,7 @@ ROS2: dashing
 Go to your package directory and clone.
 ```
 $ cd [your package directory]
-$ git clone https://bitbucket.org/technoroad/adi_driver2_for_ros2/src/dev/
+$ git clone --recursive https://bitbucket.org/technoroad/adi_driver2_for_ros2/src/dev/
 ```
 #### Build
 Go to your workspace directory and run the build command.  
@@ -50,7 +50,7 @@ $ source ./install/setup.bash
 #### Run
 Execute with the following command.
 ```
-$ ros2 launch adi_driver2 adis_rcv_csv.launch.py 
+$ ros2 launch adi_driver2 adis_rcv_csv.launch.py
 ```
 Then show imu values.
 ```

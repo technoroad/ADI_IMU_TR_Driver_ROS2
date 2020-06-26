@@ -17,7 +17,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-#include <adi_driver2/adis_rcv_csv.h>
+#include <chrono>
 
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/imu.hpp>
@@ -27,7 +27,8 @@ THE SOFTWARE.
 #include <diagnostic_updater/diagnostic_updater.hpp>
 
 
-#include <chrono>
+#include "adis_rcv_csv.h"
+
 
 using namespace std::chrono_literals;
 
@@ -302,7 +303,7 @@ void BroadcastImuPose() {
   tff.transform.translation.z = 0;
 
   tf2::Quaternion q;
-  q.setRPY(DEG2RAD(imu_.ypr_[2]), DEG2RAD(imu_.ypr_[1]), DEG2RAD(imu_.ypr_[0]));
+  q.setRPY(imu_.ypr_[2]*DEG2RAD, imu_.ypr_[1]*DEG2RAD, imu_.ypr_[0]*DEG2RAD);
   tff.transform.rotation.x = q.getX();
   tff.transform.rotation.y = q.getY();
   tff.transform.rotation.z = q.getZ();
