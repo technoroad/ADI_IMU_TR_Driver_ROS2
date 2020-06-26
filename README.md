@@ -1,10 +1,7 @@
-# adi_driver2 for ros2
-
-
-## ADIS16xxx-TR
+# ADI_IMU_TR_Driver_ROS2
 
 ### Overview
-“TR-IMU1647X” is an Analog Devices IMU sensor that can be easily connected to ROS and output high-precision attitude angles.
+“TR-IMU1647X” is Analog Devices IMU sensor that can be easily connected to ROS and output high-precision attitude angles.
 
 <div align="center">
   <img src="doc/TR-IMU16475-2.jpg" width="60%"/>
@@ -22,7 +19,7 @@ Support for other sensors is possible by adding a library of sensors.
 
 ### Operating environment
 OS： Ubuntu 18.04 LTS
-ROS2: dashing
+ROS: ros2 eloquent
 
 ### Connection
 
@@ -34,8 +31,16 @@ ROS2: dashing
 Go to your package directory and clone.
 ```
 $ cd [your package directory]
-$ git clone --recursive https://bitbucket.org/technoroad/adi_driver2_for_ros2/src/dev/
+$ git clone --recursive https://github.com/technoroad/ADI_IMU_TR_Driver_ROS2
 ```
+
+Then resolve dependencies.
+```
+$ cd [your workspace directory]
+$ rosdep update
+$ rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y
+```
+
 #### Build
 Go to your workspace directory and run the build command.  
 ```
@@ -50,11 +55,7 @@ $ source ./install/setup.bash
 #### Run
 Execute with the following command.
 ```
-$ ros2 launch adi_driver2 adis_rcv_csv.launch.py
-```
-Then show imu values.
-```
-$ ros2 tocpic echo /imu/data_raw
+$ ros2 launch adi_imu_tr_driver_ros2 adis_rcv_csv.launch.py
 ```
 
 ### Topics
