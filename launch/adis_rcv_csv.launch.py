@@ -23,14 +23,14 @@ import launch_ros
 def generate_launch_description():
 
     imu = launch_ros.actions.Node(
-        package='adi_driver2',
+        package='adi_imu_tr_driver_ros2',
         node_executable='adis_rcv_csv_node',
         output='screen',
         parameters=[{'__log_level': 'INFO',
                      'device': '/dev/ttyACM0',
                      'parent_id': 'base_link',
                      'frame_id': 'imu',
-                     'rate': '100.0',
+                     'rate': 100.0,
                      }])
 
     return launch.LaunchDescription([
