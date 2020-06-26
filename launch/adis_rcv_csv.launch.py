@@ -16,9 +16,11 @@
 #OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #THE SOFTWARE.
 
-
+import os
 import launch
 import launch_ros
+from ament_index_python.packages import get_package_share_directory
+from launch_ros.actions import Node
 
 def generate_launch_description():
 
@@ -28,11 +30,33 @@ def generate_launch_description():
         output='screen',
         parameters=[{'__log_level': 'INFO',
                      'device': '/dev/ttyACM0',
-                     'parent_id': 'base_link',
+                     'parent_id': 'odom',
                      'frame_id': 'imu',
                      'rate': 100.0,
                      }])
 
+    rviz_config_dir = os.path.join(get_package_share_directory('adi_imu_tr_driver_ros2'), 'rviz', 'imu.rviz')
+    rviz = Node(
+        package='rviz2',
+        node_executable='rviz2',
+        node_name='rviz2',
+        arguments=['-d', rviz_config_dir],
+        parameters=[{'use_sim_time': False}],
+        output='screen')
+
+    urdf = os.path.join(
+        get_package_share_directory('adi_imu_tr_driver_ros2'),
+        'urdf',
+        'adis16470_breakout.urdf')
+
+    rsp = Node(
+        package='robot_state_publisher',
+        node_executable='robot_state_publisher',
+        node_name='robot_state_publisher',
+        output='screen',
+        parameters=[{'use_sim_time': False}],
+        arguments=[urdf])
+            
     return launch.LaunchDescription([
-      imu
+      imu, rviz, rsp
     ])

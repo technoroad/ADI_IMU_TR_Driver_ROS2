@@ -79,7 +79,7 @@ void InitParam() {
   // Set default value to variables
   device_ = "/dev/ttyACM0";
   frame_id_ = "imu";
-  parent_id_ = "base_link";
+  parent_id_ = "odom";
   rate_ = 100.0;
   
   // Read parameters

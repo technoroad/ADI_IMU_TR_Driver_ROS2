@@ -18,7 +18,7 @@ Currently supported devices are:
 Support for other sensors is possible by adding a library of sensors.
 
 ### Operating environment
-OS： Ubuntu 18.04 LTS
+OS： Ubuntu 18.04 LTS  
 ROS: ros2 eloquent
 
 ### Connection
