@@ -1,5 +1,9 @@
 # ADI_IMU_TR_Driver_ROS2
 
+This repository is the ROS2 driver for ADI_IMU.
+
+[Click here](https://github.com/technoroad/ADI_IMU_TR_Driver_ROS1) for ROS1 version.
+
 ### Overview
 “TR-IMU1647X” is Analog Devices IMU sensor that can be easily connected to ROS and output high-precision attitude angles.
 
@@ -7,23 +11,11 @@
   <img src="doc/TR-IMU16475-2.jpg" width="60%"/>
 </div>
 
-Currently supported devices are:
-
-- [ADIS16470](https://www.analog.com/jp/products/adis16470.html)
-  - Wide Dynamic Range Mini MEMS IMU
-
-- [ADSI16475-2](https://www.analog.com/jp/products/adis16475.html)
-  - Precision, Miniature MEMs IMU
-
-Support for other sensors is possible by adding a library of sensors.
 
 ### Operating environment
-OS： Ubuntu 18.04 LTS  
-ROS: ros2 eloquent
+・Ubuntu 18.04 LTS + ros2 eloquent  
+・Ubuntu 20.04 LTS + ros2 foxy
 
-### Connection
-
-<span style="color: red; ">TODO</span>
 
 ### How to use
 
@@ -53,17 +45,25 @@ $ source ./install/setup.bash
 ```
 
 #### Run
-Execute with the following command.
+Turn on No. 1 and No. 4 of the DIP switches (turn off otherwise).  
+
+Connect your sensor to USB port. Run the launch file as:
+
 ```
 $ ros2 launch adi_imu_tr_driver_ros2 adis_rcv_csv.launch.py
 ```
+
+You can see the model of ADIS16470 breakout board in rviz2 panel.
 
 ### Topics
 - /imu/data_raw (sensor_msgs/Imu)
 
   IMU raw output. It contains angular velocities and linear
   accelerations. The orientation is always unit quaternion.  
+  To view this data, turn on DIP switches 1, 2, and 4
+   (turn off otherwise) and restart the IMU.  
   example:
+
 
 ```
 $ ros2 tocpic echo /imu/data_raw
