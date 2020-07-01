@@ -59,7 +59,7 @@ def generate_launch_description():
         node_name='rviz2',
         arguments=['-d', rviz_config_dir],
         parameters=[{'use_sim_time': False}],
-        output='screen',
+        output='log',
         condition=IfCondition(LaunchConfiguration("with_rviz"))
         )
 
