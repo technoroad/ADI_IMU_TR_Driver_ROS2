@@ -17,32 +17,27 @@
 #THE SOFTWARE.
 
 import os
+
 import launch
 import launch_ros
 from ament_index_python.packages import get_package_share_directory
 from launch_ros.actions import Node
+from launch.substitutions import LaunchConfiguration
+from launch.actions import DeclareLaunchArgument
+from launch.conditions import IfCondition
 
 def generate_launch_description():
-
     imu = launch_ros.actions.Node(
         package='adi_imu_tr_driver_ros2',
         node_executable='adis_rcv_csv_node',
         output='screen',
         parameters=[{'__log_level': 'INFO',
-                     'device': '/dev/ttyACM0',
-                     'parent_id': 'odom',
-                     'frame_id': 'imu',
-                     'rate': 100.0,
+                     'device': LaunchConfiguration("device"),
+                     'parent_id': LaunchConfiguration("parent_id"),
+                     'frame_id': LaunchConfiguration("frame_id"),
+                     'rate': LaunchConfiguration("rate"),
+                     'mode': LaunchConfiguration("mode"),
                      }])
-
-    rviz_config_dir = os.path.join(get_package_share_directory('adi_imu_tr_driver_ros2'), 'rviz', 'imu.rviz')
-    rviz = Node(
-        package='rviz2',
-        node_executable='rviz2',
-        node_name='rviz2',
-        arguments=['-d', rviz_config_dir],
-        parameters=[{'use_sim_time': False}],
-        output='screen')
 
     urdf = os.path.join(
         get_package_share_directory('adi_imu_tr_driver_ros2'),
@@ -56,7 +51,44 @@ def generate_launch_description():
         output='screen',
         parameters=[{'use_sim_time': False}],
         arguments=[urdf])
-            
+    
+    rviz_config_dir = os.path.join(get_package_share_directory('adi_imu_tr_driver_ros2'), 'rviz', 'imu.rviz')
+    rviz = Node(
+        package='rviz2',
+        node_executable='rviz2',
+        node_name='rviz2',
+        arguments=['-d', rviz_config_dir],
+        parameters=[{'use_sim_time': False}],
+        output='screen',
+        condition=IfCondition(LaunchConfiguration("with_rviz"))
+        )
+
     return launch.LaunchDescription([
-      imu, rviz, rsp
+        DeclareLaunchArgument(
+            name="with_rviz",
+            default_value="True",
+            description="Launch Rviz2?"),
+        DeclareLaunchArgument(
+            name="device",
+            default_value="/dev/ttyACM0",
+            description="Device name"),
+        DeclareLaunchArgument(
+            name="mode",
+            default_value="Attitude",
+            description="Choice mode 'Attitued' or 'Register'"),
+        DeclareLaunchArgument(
+            name="parent_id",
+            default_value="odom",
+            description="Name of parent frame"),
+        DeclareLaunchArgument(
+            name="frame_id",
+            default_value="imu",
+            description="The frame name where the imu is mounted."),
+        DeclareLaunchArgument(
+            name="rate",
+            default_value="100.0",
+            description="Publish rate."),
+        imu, rsp, rviz
     ])
+    
+    
