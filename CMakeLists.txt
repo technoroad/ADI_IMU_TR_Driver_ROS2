@@ -19,7 +19,6 @@ find_package(sensor_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(diagnostic_msgs REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
-find_package(${PROJECT_NAME} REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/SimpleCmd.srv"
@@ -35,12 +34,16 @@ add_executable(adis_rcv_csv_node
   src/adis_rcv_csv_node.cpp
   )
 
+# wait creating custom header
+rosidl_target_interfaces(adis_rcv_csv_node
+  ${PROJECT_NAME} "rosidl_typesupport_cpp"
+  )
+
 ament_target_dependencies(adis_rcv_csv_node 
   "rclcpp"
   "sensor_msgs"
   "tf2_ros"
   "diagnostic_msgs"
-  ${PROJECT_NAME}
   )
 target_link_libraries(adis_rcv_csv_node adis_rcv_csv)
 
