@@ -26,9 +26,11 @@ THE SOFTWARE.
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>  // for use tf2::Quaternion
 #include <diagnostic_updater/diagnostic_updater.hpp>
 
+#include <adi_imu_tr_driver_ros2/srv/simple_cmd.hpp>
 
 #include "adis_rcv_csv.h"
 
+using SimpleCmd = adi_imu_tr_driver_ros2::srv::SimpleCmd;
 
 using namespace std::chrono_literals;
 
@@ -43,12 +45,13 @@ public:
 
     updater_ = std::make_unique<diagnostic_updater::Updater>(this);
     updater_->add("imu", this, &ImuNodeRcvCsv::Diagnostic);
-
-    Prepare();
-
     // Data publisher
     imu_data_pub_ = this->create_publisher<sensor_msgs::msg::Imu>("/imu/data_raw", 1);
     tf_br_ = this->create_publisher<tf2_msgs::msg::TFMessage>("/tf", 1);
+    cmd_server_ = this->create_service<SimpleCmd>("/imu/cmd_srv",
+                  std::bind(&ImuNodeRcvCsv::CmdCb, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+
+    Prepare();
 
     timer_ = this->create_wall_timer(ms, std::bind(&ImuNodeRcvCsv::Spin, this));
   }
@@ -80,6 +83,7 @@ private:
   rclcpp::TimerBase::SharedPtr timer_;
   rclcpp::Publisher<sensor_msgs::msg::Imu>::SharedPtr imu_data_pub_;
   rclcpp::Publisher<tf2_msgs::msg::TFMessage>::SharedPtr tf_br_;
+  rclcpp::Service<SimpleCmd>::SharedPtr cmd_server_;
   std::unique_ptr<diagnostic_updater::Updater> updater_;
 
   std::string device_;
@@ -87,6 +91,27 @@ private:
   std::string parent_id_;
   double rate_;
   int cant_rcv_cnt_;
+
+  void CmdCb(
+    const std::shared_ptr<rmw_request_id_t> req_header,
+    const std::shared_ptr<SimpleCmd::Request> req,
+    const std::shared_ptr<SimpleCmd::Response> res) {
+
+    res->is_ok = true;
+    
+    if (req->cmd == "") {
+      res->is_ok = false;
+      res->msg = "You are sending an empty command.";
+      return;
+    }
+
+    std::string args = "";
+    for (size_t i = 0; i < req->args.size(); i++) {
+      args += "," + req->args[i];
+    }
+
+    res->msg = imu_.SendAndRetCmd(req->cmd, args);
+  }
 
   void InitParam() {
     // Set default value to variables

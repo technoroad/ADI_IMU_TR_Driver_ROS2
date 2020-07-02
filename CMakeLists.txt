@@ -18,15 +18,16 @@ find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(diagnostic_msgs REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
+find_package(${PROJECT_NAME} REQUIRED)
+
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "srv/SimpleCmd.srv"
+ )
 
 include_directories(
   lib/include
-  ${std_msgs_INCLUDE_DIRS}
-  ${sensor_msgs_INCLUDE_DIRS}
-  ${lifecycle_msgs_INCLUDE_DIRS}
-  ${rclcpp_lifecycle_INCLUDE_DIRS}
-  ${rclcpp_INCLUDE_DIRS}
-)
+  )
 
 ### demos
 add_subdirectory(lib)
@@ -39,19 +40,21 @@ ament_target_dependencies(adis_rcv_csv_node
   "sensor_msgs"
   "tf2_ros"
   "diagnostic_msgs"
-)
+  ${PROJECT_NAME}
+  )
 target_link_libraries(adis_rcv_csv_node adis_rcv_csv)
 
 
 install(DIRECTORY
   launch rviz urdf
   DESTINATION share/${PROJECT_NAME}/
-)
+  )
 
 
 install(TARGETS
   adis_rcv_csv_node
-  DESTINATION lib/${PROJECT_NAME})
-
+  DESTINATION lib/${PROJECT_NAME}
+  )
 
 ament_package()
+
