@@ -27,41 +27,13 @@ from launch.actions import DeclareLaunchArgument
 from launch.conditions import IfCondition
 
 def generate_launch_description():
-    imu = launch_ros.actions.Node(
-        package='adi_imu_tr_driver_ros2',
-        node_executable='adis_rcv_csv_node',
-        output='screen',
-        parameters=[{'__log_level': 'INFO',
-                     'device': LaunchConfiguration("device"),
-                     'parent_id': LaunchConfiguration("parent_id"),
-                     'frame_id': LaunchConfiguration("frame_id"),
-                     'rate': LaunchConfiguration("rate"),
-                     'mode': LaunchConfiguration("mode"),
-                     }])
 
     urdf = os.path.join(
         get_package_share_directory('adi_imu_tr_driver_ros2'),
         'urdf',
         'adis16470_breakout.urdf')
-
-    rsp = Node(
-        package='robot_state_publisher',
-        node_executable='robot_state_publisher',
-        node_name='robot_state_publisher',
-        output='screen',
-        parameters=[{'use_sim_time': False}],
-        arguments=[urdf])
     
     rviz_config_dir = os.path.join(get_package_share_directory('adi_imu_tr_driver_ros2'), 'rviz', 'imu.rviz')
-    rviz = Node(
-        package='rviz2',
-        node_executable='rviz2',
-        node_name='rviz2',
-        arguments=['-d', rviz_config_dir],
-        parameters=[{'use_sim_time': False}],
-        output='log',
-        condition=IfCondition(LaunchConfiguration("with_rviz"))
-        )
 
     return launch.LaunchDescription([
         DeclareLaunchArgument(
@@ -88,7 +60,31 @@ def generate_launch_description():
             name="rate",
             default_value="100.0",
             description="Publish rate."),
-        imu, rsp, rviz
+        Node(
+          package='adi_imu_tr_driver_ros2',
+          executable='adis_rcv_csv_node',
+          output='screen',
+          parameters=[{'__log_level': 'INFO',
+                       'device': LaunchConfiguration("device"),
+                       'parent_id': LaunchConfiguration("parent_id"),
+                       'frame_id': LaunchConfiguration("frame_id"),
+                       'rate': LaunchConfiguration("rate"),
+                       'mode': LaunchConfiguration("mode"),
+                       }]),
+        Node(
+          package='robot_state_publisher',
+          executable='robot_state_publisher',
+          name='robot_state_publisher',
+          output='log',
+          parameters=[{'use_sim_time': False}],
+          arguments=[urdf]),
+        Node(
+          package='rviz2',
+          executable='rviz2',
+          name='rviz2',
+          arguments=['-d', rviz_config_dir],
+          parameters=[{'use_sim_time': False}],
+          output='log',
+          condition=IfCondition(LaunchConfiguration("with_rviz")))
     ])
-    
-    
+

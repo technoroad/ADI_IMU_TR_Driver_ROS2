@@ -75,13 +75,15 @@ This software has the following modes.
   - The angular velocity and linear　acceleration are output as an IMU message.
 
 #### How to switch
-Open 'ADI_IMU_TR_Driver_ROS1/launch/adis_rcv_csv.launch' and change it with the mode tag.  
+Please switch by the argument at startup.
 ```
-<launch>
-Choice mode "Attitude" or "Register"
-  <arg name="mode"      default="Attitude"/>
-・・・
+$ ros2 launch adi_imu_tr_driver_ros2 adis_rcv_csv.launch.py mode:=Attitude
 ```
+or
+```
+$ ros2 launch adi_imu_tr_driver_ros2 adis_rcv_csv.launch.py mode:=Register
+```
+
 ### Topics
 This software outputs the following topics.
 
