@@ -97,6 +97,7 @@ private:
     const std::shared_ptr<SimpleCmd::Request> req,
     const std::shared_ptr<SimpleCmd::Response> res) {
 
+    (void)req_header;
     res->is_ok = true;
     
     if (req->cmd == "") {
