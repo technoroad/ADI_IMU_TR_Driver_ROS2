@@ -8,9 +8,13 @@ This repository is the ROS2 driver for ADI_IMU.
 “TR-IMU1647X” is Analog Devices IMU sensor that can be easily connected to ROS and output high-precision attitude angles.
 
 <div align="center">
-  <img src="doc/TR-IMU16475-2.jpg" width="60%"/>
+  <img src="doc/TR-IMU16475-2.jpg" width="32%"/>
+  <img src="doc/imu-platform.jpg" width="40%"/>
 </div>
 
+### Demo movie
+Click the thumbnail to open the youtube video.  
+  [![Adi-IMU-TR](http://img.youtube.com/vi/2emmX7TSa1U/0.jpg)](https://www.youtube.com/watch?v=2emmX7TSa1U "Adi-IMU-TR")
 
 ### Compatible sensors
 This software is compatible with these sensors.
@@ -26,10 +30,22 @@ This software has been confirmed to work on the following OS and ROS versions.
 
 
 ### How to use
+#### Port setting
+Add the user to the dialout group to use the USB port as the login user. (If you have already added it, skip this item)  
+Execute the following command.
+```
+$ sudo addgroup `whoami` dialout
+```
+Then, log out and log in again to reflect the settings.
+
 #### DIP switch settings
 First, set the DIP switch.
 - For TR-IMU16470 or TR-IMU16475-2, turn on No. 1 and No. 4 and turn off all the rest.
 - For TR-IMU-Platform, turn on No. 1 and No. 5 and turn off all the rest.
+
+<div align="center">
+  <img src="doc/dip-switches.jpg" width="60%"/>
+</div>
 
 After setting the switch, connect the sensor via USB.
 
@@ -59,7 +75,15 @@ $ source ./install/setup.bash
 ```
 
 #### Run
-Run the launch file as:
+This software has two execution modes.
+- Imu board(On-board angle estimation) + Rviz2 vizualization
+- Imu board(Acceleration and gyro output)
+
+The respective execution methods are shown below.
+
+
+##### Run imu board(On-board angle estimation) + Rviz vizualization
+Execute the following command.
 
 ```
 $ ros2 launch adi_imu_tr_driver_ros2 adis_rcv_csv.launch.py mode:=Attitude device:=/dev/ttyACM0
@@ -67,22 +91,31 @@ $ ros2 launch adi_imu_tr_driver_ros2 adis_rcv_csv.launch.py mode:=Attitude devic
 
 You can see the model of ADIS16470 breakout board in rviz2 panel.
 
-### Modes
-#### Explanation
-This software has the following modes.
-- Attitude mode
-  - The attitude angle of the sensor is output as tf message.
-- Register mode
-  - The angular velocity and linear　acceleration are output as an IMU message.
+<div align="center">
+  <img src="doc/rviz.png" width="60%"/>
+</div>
 
-#### How to switch
-Please switch by the argument at startup.
+##### Run imu board(Acceleration and gyro output)
+Execute the following command.
+
 ```
-$ ros2 launch adi_imu_tr_driver_ros2 adis_rcv_csv.launch.py mode:=Attitude
+$ ros2 launch adi_imu_tr_driver_ros2 adis_rcv_csv.launch.py mode:=Register device:=/dev/ttyACM0
 ```
-or
+Then you can see the output with the following command.
 ```
-$ ros2 launch adi_imu_tr_driver_ros2 adis_rcv_csv.launch.py mode:=Register
+$ ros2 tocpic echo /imu/data_raw
+・・・
+angular_velocity:
+  x: -0.0116995596098
+  y: -0.00314657808936
+  z: 0.000579557116093
+angular_velocity_covariance: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+linear_acceleration:
+  x: 0.302349234658
+  y: -0.303755252655
+  z: 9.87837325989
+linear_acceleration_covariance: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+・・・
 ```
 
 ### Topics
@@ -136,7 +169,7 @@ status:
 ・・・
 ```
 ### Common operations
-#### Calibration
+#### Calibration(Available only in Attitude mode)
 How to update the calibration parameters.
 1. Start the sensor in attitude mode using the following command.
 ```
@@ -149,7 +182,7 @@ $ ros2 launch adi_imu_tr_driver_ros2 adis_rcv_csv.launch.py mode:=Attitude devic
 ros2 service call /imu/cmd_srv adi_imu_tr_driver_ros2/srv/SimpleCmd "{cmd: 'START_BIAS_CORRECTION', args: []}"
 ```
 
-#### Reset attitued
+#### Reset attitued(Available only in Attitude mode)
 How to reset the attitude angle.
 1. Start the sensor in attitude mode using the following command.
 ```
