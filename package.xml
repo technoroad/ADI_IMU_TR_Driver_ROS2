@@ -13,7 +13,6 @@
   <build_depend>sensor_msgs</build_depend>
   <build_depend>tf2_ros</build_depend>
   <build_depend>diagnostic_updater</build_depend>
-  <build_depend>diagnostic_msgs</build_depend>
 
   <exec_depend>ros2run</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
