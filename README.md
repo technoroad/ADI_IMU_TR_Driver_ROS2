@@ -24,8 +24,8 @@ This software is compatible with these sensors.
 
 ### Operating environment
 This software has been confirmed to work on the following OS and ROS versions.
-- Ubuntu 18.04 LTS + ros2 dashing
-- Ubuntu 18.04 LTS + ros2 eloquent
+- Ubuntu 18.04 LTS + ros2 dashing (This is not maintained. If you use it, use the dashing_eloquent branch.)
+- Ubuntu 18.04 LTS + ros2 eloquent (This is not maintained. If you use it, use the dashing_eloquent branch.)
 - Ubuntu 20.04 LTS + ros2 foxy
 
 
