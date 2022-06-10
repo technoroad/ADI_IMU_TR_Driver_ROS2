@@ -30,11 +30,12 @@ This software is compatible with these sensors.
 
 This software has been confirmed to work on the following OS and ROS versions.
 
-- Ubuntu 18.04 LTS + ros2 dashing
-- Ubuntu 18.04 LTS + ros2 eloquent
+- Ubuntu 18.04 LTS + ros2 dashing (This is not maintained. If you use it, use the dashing_eloquent branch.)
+- Ubuntu 18.04 LTS + ros2 eloquent (This is not maintained. If you use it, use the dashing_eloquent branch.)
 - Ubuntu 20.04 LTS + ros2 foxy
+- Ubuntu 20.04 LTS + ros2 galactic
+- Ubuntu 22.04 LTS + ros2 humble
 
-* Ubuntu 20.04 LTS + ros2 galactic
 
 ### How to use
 
@@ -155,7 +156,7 @@ This software outputs the following topics.
   example:
 
 ```
-$ ros2 tocpic echo /imu/data_raw
+$ ros2 topic echo /imu/data_raw
 ・・・
 angular_velocity:
   x: -0.0116995596098
