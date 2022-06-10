@@ -33,6 +33,9 @@ def generate_launch_description():
         'urdf',
         'adis16470_breakout.urdf')
     
+    with open(urdf, 'r') as infp:
+        robot_desc = infp.read()
+    
     rviz_config_dir = os.path.join(get_package_share_directory('adi_imu_tr_driver_ros2'), 'rviz', 'imu.rviz')
 
     return launch.LaunchDescription([
@@ -62,7 +65,7 @@ def generate_launch_description():
             description="Publish rate."),
         Node(
           package='adi_imu_tr_driver_ros2',
-          node_executable='adis_rcv_csv_node',
+          executable='adis_rcv_csv_node',
           output='screen',
           parameters=[{'__log_level': 'INFO',
                        'device': LaunchConfiguration("device"),
@@ -73,14 +76,14 @@ def generate_launch_description():
                        }]),
         Node(
           package='robot_state_publisher',
-          node_executable='robot_state_publisher',
+          executable='robot_state_publisher',
           name='robot_state_publisher',
           output='log',
-          parameters=[{'use_sim_time': False}],
+          parameters=[{'use_sim_time': False, 'robot_description': robot_desc}],
           arguments=[urdf]),
         Node(
           package='rviz2',
-          node_executable='rviz2',
+          executable='rviz2',
           name='rviz2',
           arguments=['-d', rviz_config_dir],
           parameters=[{'use_sim_time': False}],
