@@ -26,8 +26,9 @@ This software is compatible with these sensors.
 This software has been confirmed to work on the following OS and ROS versions.
 - Ubuntu 18.04 LTS + ros2 dashing (This is not maintained. If you use it, use the dashing_eloquent branch.)
 - Ubuntu 18.04 LTS + ros2 eloquent (This is not maintained. If you use it, use the dashing_eloquent branch.)
-- Ubuntu 20.04 LTS + ros2 foxy
-
+- Ubuntu 20.04 LTS + ros2 foxy (Use the foxy branch.)
+- Ubuntu 20.04 LTS + ros2 galactic (Use the galactic branch.)
+- Ubuntu 22.04 LTS + ros2 humble (Use the humble branch.)
 
 ### How to use
 #### Port setting
@@ -103,7 +104,7 @@ $ ros2 launch adi_imu_tr_driver_ros2 adis_rcv_csv.launch.py mode:=Register devic
 ```
 Then you can see the output with the following command.
 ```
-$ ros2 tocpic echo /imu/data_raw
+$ ros2 topic echo /imu/data_raw
 ・・・
 angular_velocity:
   x: -0.0116995596098
@@ -130,7 +131,7 @@ This software outputs the following topics.
 
 
 ```
-$ ros2 tocpic echo /imu/data_raw
+$ ros2 topic echo /imu/data_raw
 ・・・
 angular_velocity:
   x: -0.0116995596098
