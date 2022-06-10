@@ -129,7 +129,7 @@ $ ros2 launch adi_imu_tr_driver_ros2 adis_rcv_csv.launch.py mode:=Register devic
 Then you can see the output with the following command.
 
 ```
-$ ros2 tocpic echo /imu/data_raw
+$ ros2 topic echo /imu/data_raw
 ・・・
 angular_velocity:
   x: -0.0116995596098
