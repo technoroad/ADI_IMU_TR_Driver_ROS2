@@ -23,7 +23,7 @@ THE SOFTWARE.
 #include <sensor_msgs/msg/imu.hpp>
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf2_msgs/msg/tf_message.hpp>
-#include <tf2_geometry_msgs/tf2_geometry_msgs.h>  // for use tf2::Quaternion
+#include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>  // for use tf2::Quaternion
 #include <diagnostic_updater/diagnostic_updater.hpp>
 
 #include <adi_imu_tr_driver_ros2/srv/simple_cmd.hpp>
