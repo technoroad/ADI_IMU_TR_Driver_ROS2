@@ -231,6 +231,21 @@ $ ros2 launch adi_imu_tr_driver_ros2 adis_rcv_csv.launch.py mode:=Attitude devic
 $ ros2 service call /imu/cmd_srv adi_imu_tr_driver_ros2/srv/SimpleCmd "{cmd: 'RESET_FILTER', args: []}"
 ```
 
+#### Get error code
+How to get error code
+1. Get error code from sensor.
+```
+$ ros2 service call /imu/cmd_srv adi_imu_tr_driver_ros2/srv/SimpleCmd "{cmd: 'error', args: []}"
+```
+2. Get error code description.
+```
+$ ros2 service call /imu/cmd_srv adi_imu_tr_driver_ros2/srv/SimpleCmd "{cmd: 'help', args: []}"
+```
+※ Sending the help command stops data transmission from IMU.Send the start command to resume.
+```
+$ ros2 service call /imu/cmd_srv adi_imu_tr_driver_ros2/srv/SimpleCmd "{cmd: 'start', args: []}"
+```
+
 ### License
 
 MIT
