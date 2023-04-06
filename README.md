@@ -26,8 +26,7 @@ This software is compatible with these sensors.
 This software has been confirmed to work on the following OS and ROS versions.
 - Ubuntu 18.04 LTS + ros2 dashing (This is not maintained. If you use it, use the dashing_eloquent branch.)
 - Ubuntu 18.04 LTS + ros2 eloquent (This is not maintained. If you use it, use the dashing_eloquent branch.)
-- Ubuntu 20.04 LTS + ros2 foxy (Use the foxy branch.)
-- Ubuntu 20.04 LTS + ros2 galactic (Use the galactic branch.)
+- Ubuntu 20.04 LTS + ros2 foxy or galactic (Use the foxy_galactic branch.)
 - Ubuntu 22.04 LTS + ros2 humble (Use the humble branch.)
 
 ### How to use
@@ -78,7 +77,6 @@ $ colcon build --symlink-install
 Then set the path and configure out put.
 ```
 $ source ./install/setup.bash
-$ export RCUTILS_LOGGING_USE_STDOUT=1
 ```
 
 #### Run
