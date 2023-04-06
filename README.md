@@ -70,9 +70,10 @@ Go to your workspace directory and run the build command.
 $ cd [your workspace directory]
 $ colcon build --symlink-install
 ```
-Then set the path.
+Then set the path and configure out put.
 ```
 $ source ./install/setup.bash
+$ export RCUTILS_LOGGING_USE_STDOUT=1
 ```
 
 #### Run
