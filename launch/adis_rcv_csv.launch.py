@@ -64,6 +64,7 @@ def generate_launch_description():
           package='adi_imu_tr_driver_ros2',
           executable='adis_rcv_csv_node',
           output='screen',
+          prefix=['stdbuf -o L'],
           parameters=[{'__log_level': 'INFO',
                        'device': LaunchConfiguration("device"),
                        'parent_id': LaunchConfiguration("parent_id"),

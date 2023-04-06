@@ -92,7 +92,6 @@ $ colcon build --symlink-install
 Then set the path and configure out put.
 ```
 $ source ./install/setup.bash
-$ export RCUTILS_LOGGING_USE_STDOUT=1
 ```
 
 #### Run
