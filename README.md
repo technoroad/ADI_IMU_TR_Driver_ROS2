@@ -61,9 +61,12 @@ Then resolve dependencies.
 ```
 $ cd [your workspace directory]
 $ rosdep update
+$ rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y
+```
+If your ROS version is galactic, run the following commands first.
+```
 $ sudo apt install ros-galactic-ros-testing
 $ sudo apt install ros-galactic-diagnostic-updater
-$ rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y
 ```
 
 #### Build
