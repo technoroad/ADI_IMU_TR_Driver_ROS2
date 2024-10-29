@@ -50,7 +50,7 @@ target_link_libraries(adis_rcv_csv_node adis_rcv_csv)
 
 
 install(DIRECTORY
-  launch rviz urdf
+  launch rviz urdf config
   DESTINATION share/${PROJECT_NAME}/
   )
 
