@@ -250,6 +250,31 @@ $ ros2 service call /imu/cmd_srv adi_imu_tr_driver_ros2/srv/SimpleCmd "{cmd: 'he
 $ ros2 service call /imu/cmd_srv adi_imu_tr_driver_ros2/srv/SimpleCmd "{cmd: 'start', args: []}"
 ```
 
+### Filter testing(Optional)
+> [!NOTE]
+> Although posture estimation is possible using imu alone, this is for those who want to try posture estimation using a different filter.
+
+This shows how to test `imu_filter_madgwick` and `imu_complementary_filter` in [imu_tools](https://github.com/CCNYRoboticsLab/imu_tools).  
+To install `imu_tools`, use the following command.
+```sh
+$ sudo apt install ros-humble-imu-tools
+```
+
+
+#### imu_filter_madgwick
+Run the following command to check the TF or topic `imu/data/madgwick`.
+```sh
+$ ros2 launch adi_imu_tr_driver_ros2 adis_rcv_csv.launch.py mode:=Register device:=/dev/ttyACM0 use_madgwick:=true
+```
+If you want to change a parameter, change [madgwick.yaml](./config/madgwick.yaml).
+
+#### imu_complementary_filter
+Run the following command to check the TF or topic `imu/data/complementary`.
+```sh
+$ ros2 launch adi_imu_tr_driver_ros2 adis_rcv_csv.launch.py mode:=Register device:=/dev/ttyACM0 use_complementary:=true
+```
+If you want to change a parameter, change [complementary.yaml](./config/complementary.yaml).
+
 ### License
 
 MIT
