@@ -19,7 +19,6 @@
 import os
 
 import launch
-import launch_ros
 from ament_index_python.packages import get_package_share_directory
 from launch_ros.actions import Node
 from launch.substitutions import LaunchConfiguration
@@ -34,7 +33,9 @@ def generate_launch_description():
         'urdf',
         'adis16470_breakout.urdf')
 
-    rviz_config_dir = os.path.join(get_package_share_directory('adi_imu_tr_driver_ros2'), 'rviz', 'imu.rviz')
+    rviz_config = os.path.join(get_package_share_directory('adi_imu_tr_driver_ros2'), 'rviz', 'imu.rviz')
+    filter_config_dir = os.path.join(
+        get_package_share_directory('adi_imu_tr_driver_ros2'), 'config')
 
     return launch.LaunchDescription([
         DeclareLaunchArgument(
@@ -61,6 +62,14 @@ def generate_launch_description():
             name="rate",
             default_value="100.0",
             description="Publish rate."),
+        DeclareLaunchArgument(
+            name="use_madgwick",
+            default_value="false",
+            description="Use Madgwick filter."),
+        DeclareLaunchArgument(
+            name="use_complementary",
+            default_value="false",
+            description="Use Complementary filter."),
         Node(
             package='adi_imu_tr_driver_ros2',
             executable='adis_rcv_csv_node',
@@ -84,8 +93,26 @@ def generate_launch_description():
             package='rviz2',
             executable='rviz2',
             name='rviz2',
-            arguments=['-d', rviz_config_dir],
+            arguments=['-d', rviz_config],
             parameters=[{'use_sim_time': False}],
             output='log',
-            condition=IfCondition(LaunchConfiguration("with_rviz")))
+            condition=IfCondition(LaunchConfiguration("with_rviz"))),
+        Node(
+            condition=IfCondition(LaunchConfiguration("use_madgwick")),
+            package='imu_filter_madgwick',
+            executable='imu_filter_madgwick_node',
+            name='imu_filter',
+            remappings=[('imu/data', 'imu/data/madgwick')],
+            output='screen',
+            parameters=[os.path.join(filter_config_dir, 'madgwick.yaml')],
+        ),
+        Node(
+            condition=IfCondition(LaunchConfiguration("use_complementary")),
+            package='imu_complementary_filter',
+            executable='complementary_filter_node',
+            name='complementary_filter_gain_node',
+            remappings=[('imu/data', 'imu/data/complementary')],
+            output='screen',
+            parameters=[os.path.join(filter_config_dir, 'complementary.yaml')],
+        )
     ])
