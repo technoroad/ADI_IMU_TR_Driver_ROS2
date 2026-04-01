@@ -29,17 +29,15 @@ include_directories(
   lib/include
   )
 
-### demos
+rosidl_get_typesupport_target(cpp_typesupport_target "${PROJECT_NAME}" "rosidl_typesupport_cpp")
+
+### CSV node (existing)
 add_subdirectory(lib)
 add_executable(adis_rcv_csv_node
   src/adis_rcv_csv_node.cpp
   )
-
-# wait creating custom header
-rosidl_get_typesupport_target(cpp_typesupport_target "${PROJECT_NAME}" "rosidl_typesupport_cpp")
 target_link_libraries(adis_rcv_csv_node "${cpp_typesupport_target}")
-
-ament_target_dependencies(adis_rcv_csv_node 
+ament_target_dependencies(adis_rcv_csv_node
   "rclcpp"
   "sensor_msgs"
   "tf2_ros"
@@ -48,15 +46,27 @@ ament_target_dependencies(adis_rcv_csv_node
   )
 target_link_libraries(adis_rcv_csv_node adis_rcv_csv)
 
+### Binary node (new)
+add_executable(adis_rcv_bin_node
+  src/adis_rcv_bin_node.cpp
+  )
+target_link_libraries(adis_rcv_bin_node "${cpp_typesupport_target}" adis_rcv_bin)
+ament_target_dependencies(adis_rcv_bin_node
+  "rclcpp"
+  "sensor_msgs"
+  "tf2_ros"
+  "tf2_geometry_msgs"
+  "diagnostic_updater"
+  )
 
 install(DIRECTORY
   launch rviz urdf
   DESTINATION share/${PROJECT_NAME}/
   )
 
-
 install(TARGETS
   adis_rcv_csv_node
+  adis_rcv_bin_node
   DESTINATION lib/${PROJECT_NAME}
   )
 
