@@ -19,10 +19,9 @@ This driver supports two product lines, each with two generations:
 | **1st gen** | TR-IMU1647X (ADIS164xx) | TR-IMU-Platform |
 | **2nd gen** | TR-IMU166XX (ADIS166xx) | TR-IMU-Platform2 |
 
-| Generation | Communication | Document |
-|------------|--------------|----------|
-| 1st gen | CSV over Serial | [doc/gen1_csv.md](doc/gen1_csv.md) |
-| 2nd gen | Binary over Serial | [doc/gen2_binary.md](doc/gen2_binary.md) |
+Documentation is organized by generation and communication protocol:
+- **1st gen** — CSV over Serial → [doc/gen1_csv.md](doc/gen1_csv.md)
+- **2nd gen** — Binary over Serial → [doc/gen2_binary.md](doc/gen2_binary.md)
 
 ### How to identify your board
 
