@@ -11,7 +11,8 @@ Supports all ADI IMU sensors mounted on the TR-IMU-Platform2 board. The sensor m
 
 | OS | ROS2 | Branch |
 |----|------|--------|
-| Ubuntu 22.04 LTS | Humble | `wip_gen2` |
+| Ubuntu 22.04 LTS | Humble | `humble` |
+| Ubuntu 24.04 LTS | Jazzy | `jazzy` |
 
 ## Setup
 
