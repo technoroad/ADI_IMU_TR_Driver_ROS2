@@ -12,15 +12,22 @@ Click the thumbnail to open the youtube video.
 
 ## Supported Platforms
 
-| Platform | Communication | Document |
-|----------|--------------|----------|
-| TR-IMU1647X (1st gen) | CSV over Serial | [doc/gen1_csv.md](doc/gen1_csv.md) |
-| TR-IMU-Platform2 (2nd gen) | Binary over Serial | [doc/gen2_binary.md](doc/gen2_binary.md) |
+This driver supports two product lines, each with two generations:
+
+|  | IMU Board | IMU Platform |
+|--|-----------|-------------|
+| **1st gen** | TR-IMU1647X (ADIS164xx) | TR-IMU-Platform |
+| **2nd gen** | TR-IMU166XX (ADIS166xx) | TR-IMU-Platform2 |
+
+| Generation | Communication | Document |
+|------------|--------------|----------|
+| 1st gen | CSV over Serial | [doc/gen1_csv.md](doc/gen1_csv.md) |
+| 2nd gen | Binary over Serial | [doc/gen2_binary.md](doc/gen2_binary.md) |
 
 ### How to identify your board
 
-- **TR-IMU1647X** series (TR-IMU16470, TR-IMU16475-2, TR-IMU16477-2, TR-IMU16495-2, TR-IMU16500, TR-IMU16505-2, TR-IMU-Platform) → **1st gen** (CSV)
-- **TR-IMU-Platform2** → **2nd gen** (Binary)
+- IMU Board product number starts with **164xx** → 1st gen / **166xx** → 2nd gen
+- IMU Platform board name: **TR-IMU-Platform** → 1st gen / **TR-IMU-Platform2** → 2nd gen
 
 ## Quick Start
 
