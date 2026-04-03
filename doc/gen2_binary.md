@@ -37,7 +37,7 @@ $ rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y
 ```
 
 ### Build
-
+Navigate to the `src` directory of your workspace and run the following commands.
 ```
 $ cd [your workspace directory]
 $ colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-select adi_imu_tr_driver_ros2
