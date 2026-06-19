@@ -92,8 +92,8 @@ Commands can be sent to the device via `/imu/cmd_srv` (adi_imu_tr_driver_ros2/sr
 | `0x31` | Start periodic telemetry | `"{cmd: '0x31', args: []}"` |
 | `0x32` | Stop periodic telemetry | `"{cmd: '0x32', args: []}"` |
 | `0x33` | Reset attitude estimation | `"{cmd: '0x33', args: []}"` |
-| `0x34` | Reboot the MCU | `"{cmd: '0x34', args: []}"` |
-| `0x35` | Enter DFU mode | `"{cmd: '0x35', args: []}"` |
+| `0xB0` | Reboot the MCU | `"{cmd: '0xB0', args: ['0x00']}"` |
+| `0xB1` | Enter DFU mode (key 0x12,0x34,0x56,0x78) | `"{cmd: '0xB1', args: ['0x12', '0x34', '0x56', '0x78']}"` |
 
 ### Settings Commands
 
@@ -114,7 +114,7 @@ $ ros2 service call /imu/cmd_srv adi_imu_tr_driver_ros2/srv/SimpleCmd "{cmd: '0x
 $ ros2 service call /imu/cmd_srv adi_imu_tr_driver_ros2/srv/SimpleCmd "{cmd: '0x75', args: ['0x02']}"
 ```
 
-**Note**: To persist settings changes (`0x73`-`0x77`), run `0x71` (save) after making changes, then `0x34` (reboot) to apply.
+**Note**: To persist settings changes (`0x73`-`0x77`), run `0x71` (save) after making changes, then `0xB0` (reboot) to apply. `0xB0`/`0xB1` are option commands and return no response. Reboot takes ~3 s, periodic telemetry does not auto-resume, and the spec recommends waiting ~1 min for output stability.
 
 ## Protocol Overview
 

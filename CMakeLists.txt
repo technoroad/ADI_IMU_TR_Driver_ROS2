@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.22.1)
 
 project(adi_imu_tr_driver_ros2)
 
@@ -69,6 +69,38 @@ install(TARGETS
   adis_rcv_bin_node
   DESTINATION lib/${PROJECT_NAME}
   )
+
+### Tests (Layer 3: ROS2 node integration)
+if(BUILD_TESTING)
+  find_package(ament_cmake_gtest REQUIRED)
+
+  ament_add_gtest(test_adis_rcv_bin_node
+    src/test/test_adis_rcv_bin_node.cpp
+    TIMEOUT 180
+  )
+  if(TARGET test_adis_rcv_bin_node)
+    target_include_directories(test_adis_rcv_bin_node PRIVATE src)
+    target_link_libraries(test_adis_rcv_bin_node
+      "${cpp_typesupport_target}"
+      adis_rcv_bin
+    )
+    ament_target_dependencies(test_adis_rcv_bin_node
+      "rclcpp"
+      "sensor_msgs"
+      "tf2_ros"
+      "tf2_geometry_msgs"
+      "diagnostic_updater"
+    )
+  endif()
+
+  # Layer 4: parameter / remap / launch-arg coverage (no hardware; PTY fake
+  # IMU in src/test/fake_imu.py). Driven via launch_testing.
+  find_package(launch_testing_ament_cmake REQUIRED)
+  add_launch_test(src/test/test_node_params.py TIMEOUT 300)
+  add_launch_test(src/test/test_node_device.py TIMEOUT 120)
+  add_launch_test(src/test/test_launch_args.py TIMEOUT 180)
+  add_launch_test(src/test/test_node_mpu_error.py TIMEOUT 120)
+endif()
 
 ament_package()
 
