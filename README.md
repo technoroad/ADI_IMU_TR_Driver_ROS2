@@ -31,6 +31,26 @@ Documentation is organized by generation and communication protocol:
 
 See each platform's document for details.
 
+## Cloning and Updating
+
+The IMU library lives in the `lib/` git submodule, so it must be fetched
+together with the main repository.
+
+```bash
+# First clone (fetch submodules at the same time)
+git clone --recurse-submodules <repo-url>
+
+# Update an existing checkout
+git pull
+git submodule update --init --recursive
+```
+
+`git pull` only updates the *recorded* submodule revision; it does **not**
+change the files under `lib/`. Always run `git submodule update --init
+--recursive` afterwards to check out the matching `lib/` commit. To do this
+automatically on every pull/checkout, set `git config submodule.recurse true`
+(the first checkout of a new submodule still needs the `--init` above).
+
 ## License
 
 MIT
