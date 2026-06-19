@@ -50,9 +50,9 @@ Log out and log back in for the change to take effect.
 After setting the switches, connect the sensor via USB.
 
 ### Install
-
+Navigate to the `src` directory of your workspace and run the following commands.
 ```
-$ cd [your package directory]
+$ cd [your workspace directory]/src
 $ git clone --recursive https://github.com/technoroad/ADI_IMU_TR_Driver_ROS2
 $ cd [your workspace directory]
 $ rosdep update
@@ -63,7 +63,7 @@ $ rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y
 
 ```
 $ cd [your workspace directory]
-$ colcon build --symlink-install
+$ colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release --packages-select adi_imu_tr_driver_ros2
 $ source ./install/setup.bash
 ```
 
