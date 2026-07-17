@@ -62,6 +62,7 @@ $ ros2 launch adi_imu_tr_driver_ros2 adis_rcv_bin.launch.py
 | `frame_id` | `imu` | IMU frame name |
 | `parent_id` | `odom` | Parent frame name |
 | `rate` | `100.0` | Publish rate [Hz] |
+| `publish_tf` | `True` | Publish the IMU attitude TF |
 | `with_rviz` | `True` | Whether to launch RViz2 |
 
 Example:
@@ -74,7 +75,7 @@ $ ros2 launch adi_imu_tr_driver_ros2 adis_rcv_bin.launch.py device:=/dev/ttyACM0
 | Topic | Type | Description |
 |-------|------|-------------|
 | `/imu/data_raw` | sensor_msgs/Imu | Quaternion + acceleration + angular velocity |
-| `/tf` | tf2_msgs/TFMessage | IMU pose TF broadcast |
+| `/tf` | tf2_msgs/TFMessage | IMU pose TF broadcast (disabled when `publish_tf` is false) |
 | `/diagnostics` | diagnostic_msgs/DiagnosticArray | Sensor status |
 
 ## Service Commands
