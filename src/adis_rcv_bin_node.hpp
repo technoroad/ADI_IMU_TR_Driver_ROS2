@@ -55,7 +55,9 @@ class ImuNodeRcvBin : public rclcpp::Node
     // /imu/cmd_srv exactly as before; under __ns:=/foo they become
     // /foo/imu/data_raw, /foo/tf, /foo/imu/cmd_srv.
     imu_data_pub_ = this->create_publisher<sensor_msgs::msg::Imu>("imu/data_raw", 1);
-    tf_br_ = this->create_publisher<tf2_msgs::msg::TFMessage>("tf", 1);
+    if (publish_tf_) {
+      tf_br_ = this->create_publisher<tf2_msgs::msg::TFMessage>("tf", 1);
+    }
     cmd_server_ = this->create_service<SimpleCmd>(
         "imu/cmd_srv", std::bind(&ImuNodeRcvBin::CmdCb, this, std::placeholders::_1,
                                   std::placeholders::_2, std::placeholders::_3));
@@ -146,6 +148,7 @@ class ImuNodeRcvBin : public rclcpp::Node
   std::string frame_id_;
   std::string parent_id_;
   double rate_;
+  bool publish_tf_;
   int cant_rcv_cnt_;
   bool imu_error_;  // true while mpu_error bit4 (IMU not recognized) is set
 
@@ -155,6 +158,7 @@ class ImuNodeRcvBin : public rclcpp::Node
     frame_id_ = "imu";
     parent_id_ = "odom";
     rate_ = 100.0;
+    publish_tf_ = true;
 
     std::string key = "device";
     if (this->get_parameter(key, device_)) {
@@ -186,6 +190,14 @@ class ImuNodeRcvBin : public rclcpp::Node
     } else {
       RCLCPP_WARN(this->get_logger(), "Could not get param %s. Set default value: %.1f",
                   key.c_str(), rate_);
+    }
+
+    key = "publish_tf";
+    if (this->get_parameter(key, publish_tf_)) {
+      RCLCPP_INFO(this->get_logger(), "%s: %s", key.c_str(), publish_tf_ ? "true" : "false");
+    } else {
+      RCLCPP_WARN(this->get_logger(), "Could not get param %s. Set default value: %s",
+                  key.c_str(), publish_tf_ ? "true" : "false");
     }
 
     cant_rcv_cnt_ = 0;
@@ -354,7 +366,9 @@ class ImuNodeRcvBin : public rclcpp::Node
       imu_error_ = false;
 
       PubImuData();
-      BroadcastImuPose();
+      if (publish_tf_) {
+        BroadcastImuPose();
+      }
     } else {
       if (res == kImuBinErrCantRcvData) cant_rcv_cnt_++;
       PrintErrorCode(res);

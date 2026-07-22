@@ -58,6 +58,10 @@ def generate_launch_description():
             name="rate",
             default_value="100.0",
             description="Publish rate."),
+        DeclareLaunchArgument(
+            name="publish_tf",
+            default_value="True",
+            description="Publish the IMU attitude TF."),
         Node(
             package='adi_imu_tr_driver_ros2',
             executable='adis_rcv_bin_node',
@@ -69,6 +73,7 @@ def generate_launch_description():
                 'parent_id': LaunchConfiguration("parent_id"),
                 'frame_id': LaunchConfiguration("frame_id"),
                 'rate': LaunchConfiguration("rate"),
+                'publish_tf': LaunchConfiguration("publish_tf"),
             }]),
         Node(
             package='robot_state_publisher',
