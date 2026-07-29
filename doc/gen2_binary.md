@@ -21,7 +21,7 @@ Supports all ADI IMU sensors mounted on the TR-IMU-Platform2 board. The sensor m
 Add the user to the `dialout` group to access the USB port. (Skip if already done.)
 
 ```
-$ sudo addgroup `whoami` dialout
+$ sudo usermod -aG dialout $USER
 ```
 
 Log out and log back in for the change to take effect.

@@ -45,12 +45,6 @@ git pull
 git submodule update --init --recursive
 ```
 
-`git pull` only updates the *recorded* submodule revision; it does **not**
-change the files under `lib/`. Always run `git submodule update --init
---recursive` afterwards to check out the matching `lib/` commit. To do this
-automatically on every pull/checkout, set `git config submodule.recurse true`
-(the first checkout of a new submodule still needs the `--init` above).
-
 ## License
 
 MIT

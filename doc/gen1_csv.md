@@ -33,7 +33,7 @@ Driver for the TR-IMU1647X series, which communicates IMU data over CSV-formatte
 Add the user to the `dialout` group to access the USB port. (Skip if already done.)
 
 ```
-$ sudo addgroup `whoami` dialout
+$ sudo usermod -aG dialout $USER
 ```
 
 Log out and log back in for the change to take effect.
