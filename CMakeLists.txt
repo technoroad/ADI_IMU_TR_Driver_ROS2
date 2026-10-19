@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.28.3)
+cmake_minimum_required(VERSION 3.22...3.28)
 
 project(adi_imu_tr_driver_ros2)
 
@@ -21,6 +21,16 @@ find_package(tf2_geometry_msgs REQUIRED)
 find_package(diagnostic_updater REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
+# ament_target_dependencies() no longer exists on Lyrical, so link the
+# exported targets directly.
+set(ros_dependency_targets
+  rclcpp::rclcpp
+  ${sensor_msgs_TARGETS}
+  tf2_ros::tf2_ros
+  tf2_geometry_msgs::tf2_geometry_msgs
+  diagnostic_updater::diagnostic_updater
+  )
+
 rosidl_generate_interfaces(${PROJECT_NAME}
   "srv/SimpleCmd.srv"
 )
@@ -36,27 +46,20 @@ add_subdirectory(lib)
 add_executable(adis_rcv_csv_node
   src/adis_rcv_csv_node.cpp
   )
-target_link_libraries(adis_rcv_csv_node "${cpp_typesupport_target}")
-ament_target_dependencies(adis_rcv_csv_node
-  "rclcpp"
-  "sensor_msgs"
-  "tf2_ros"
-  "tf2_geometry_msgs"
-  "diagnostic_updater"
+target_link_libraries(adis_rcv_csv_node
+  "${cpp_typesupport_target}"
+  ${ros_dependency_targets}
+  adis_rcv_csv
   )
-target_link_libraries(adis_rcv_csv_node adis_rcv_csv)
 
 ### Binary node (new)
 add_executable(adis_rcv_bin_node
   src/adis_rcv_bin_node.cpp
   )
-target_link_libraries(adis_rcv_bin_node "${cpp_typesupport_target}" adis_rcv_bin)
-ament_target_dependencies(adis_rcv_bin_node
-  "rclcpp"
-  "sensor_msgs"
-  "tf2_ros"
-  "tf2_geometry_msgs"
-  "diagnostic_updater"
+target_link_libraries(adis_rcv_bin_node
+  "${cpp_typesupport_target}"
+  ${ros_dependency_targets}
+  adis_rcv_bin
   )
 
 install(DIRECTORY
@@ -82,14 +85,8 @@ if(BUILD_TESTING)
     target_include_directories(test_adis_rcv_bin_node PRIVATE src)
     target_link_libraries(test_adis_rcv_bin_node
       "${cpp_typesupport_target}"
+      ${ros_dependency_targets}
       adis_rcv_bin
-    )
-    ament_target_dependencies(test_adis_rcv_bin_node
-      "rclcpp"
-      "sensor_msgs"
-      "tf2_ros"
-      "tf2_geometry_msgs"
-      "diagnostic_updater"
     )
   endif()
 

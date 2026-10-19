@@ -21,7 +21,7 @@ THE SOFTWARE.
 #ifndef ADIS_RCV_BIN_NODE_HPP_
 #define ADIS_RCV_BIN_NODE_HPP_
 
-#include <tf2_ros/transform_broadcaster.h>
+#include <tf2_ros/transform_broadcaster.hpp>
 
 #include <adi_imu_tr_driver_ros2/srv/simple_cmd.hpp>
 #include <chrono>
