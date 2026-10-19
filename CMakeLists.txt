@@ -63,7 +63,7 @@ target_link_libraries(adis_rcv_bin_node
   )
 
 install(DIRECTORY
-  launch rviz urdf
+  launch meshes rviz urdf
   DESTINATION share/${PROJECT_NAME}/
   )
 
