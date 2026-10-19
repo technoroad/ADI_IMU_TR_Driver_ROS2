@@ -13,11 +13,13 @@ Table 1. Files under `docker/`
 |---|---|
 | `Dockerfile.humble` | Image definition for ROS2 Humble (Ubuntu 22.04) |
 | `Dockerfile.jazzy` | Image definition for ROS2 Jazzy (Ubuntu 24.04) |
-| `docker-compose.yml` | Service definitions for the `humble` / `jazzy` services |
+| `Dockerfile.lyrical` | Image definition for ROS2 Lyrical (Ubuntu 26.04) |
+| `docker-compose.yml` | Service definitions for the `humble` / `jazzy` / `lyrical` services |
 | `.env` | UID/GID and device-path environment variables (not tracked by git) |
 
-The Humble and Jazzy images are built separately and used as two
-switchable services (`humble` / `jazzy`) in `docker-compose.yml`.
+The Humble, Jazzy and Lyrical images are built separately and used as
+three switchable services (`humble` / `jazzy` / `lyrical`) in
+`docker-compose.yml`.
 
 ## Prerequisites
 
@@ -72,7 +74,7 @@ getent group render   # -> RENDER_GID
 
 ## Build
 
-Build the container images. Humble and Jazzy are built separately.
+Build the container images. Each distribution is built separately.
 
 ```bash
 # Run from the docker/ directory
@@ -83,6 +85,9 @@ docker compose build humble
 
 # Build the Jazzy image
 docker compose build jazzy
+
+# Build the Lyrical image
+docker compose build lyrical
 ```
 
 ROS dependencies are baked in at build time via `rosdep`, so there
@@ -103,8 +108,8 @@ docker exec -it adi-imu-tr-driver-jazzy bash
 docker compose down
 ```
 
-For Humble, replace the service and container names with
-`humble` / `adi-imu-tr-driver-humble`.
+For Humble or Lyrical, replace the service and container names
+with the ones in Table 3.
 
 Table 3. Services and container names
 
@@ -112,6 +117,7 @@ Table 3. Services and container names
 |---|---|---|
 | `humble` | `adi-imu-tr-driver:humble` | `adi-imu-tr-driver-humble` |
 | `jazzy` | `adi-imu-tr-driver:jazzy` | `adi-imu-tr-driver-jazzy` |
+| `lyrical` | `adi-imu-tr-driver:lyrical` | `adi-imu-tr-driver-lyrical` |
 
 The workspace is mounted read-write at
 `~/ros2_ws/src/adi_imu_tr_driver_ros2` inside the container, so
