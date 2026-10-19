@@ -31,7 +31,7 @@ def generate_launch_description():
     urdf = os.path.join(
         get_package_share_directory('adi_imu_tr_driver_ros2'),
         'urdf',
-        'adis16470_breakout.urdf')
+        'tr_imu16607.urdf')
 
     rviz_config_dir = os.path.join(
         get_package_share_directory('adi_imu_tr_driver_ros2'),

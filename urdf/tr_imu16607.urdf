@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<robot name="tr_imu16607">
+  <link name="imu">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://adi_imu_tr_driver_ros2/meshes/tr_imu16607.dae"/>
+      </geometry>
+    </visual>
+  </link>
+</robot>
