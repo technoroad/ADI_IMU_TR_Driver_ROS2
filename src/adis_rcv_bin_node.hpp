@@ -98,6 +98,12 @@ class ImuNodeRcvBin : public rclcpp::Node
       r.sleep();
     }
 
+    // A previous session may have left the board's command parser in the
+    // middle of a frame, in which case it would swallow the commands below.
+    if (!imu_.ResyncParser()) {
+      RCLCPP_WARN(this->get_logger(), "Failed to resync the board's command parser.");
+    }
+
     // Stop any ongoing telemetry and flush
     imu_.StopTelemetry();
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
