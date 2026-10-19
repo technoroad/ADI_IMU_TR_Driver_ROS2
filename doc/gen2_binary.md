@@ -13,6 +13,7 @@ Supports all ADI IMU sensors mounted on the TR-IMU-Platform2 board. The sensor m
 |----|------|--------|
 | Ubuntu 22.04 LTS | Humble | `humble` |
 | Ubuntu 24.04 LTS | Jazzy | `jazzy` |
+| Ubuntu 26.04 LTS | Lyrical | `lyrical` |
 
 ## Setup
 
@@ -28,9 +29,13 @@ Log out and log back in for the change to take effect.
 
 ### Install
 
+Replace `[branch]` with the branch for your ROS2 distribution in
+[Supported Environments](#supported-environments) (e.g. `humble`).
+The default branch does not build on every distribution.
+
 ```
 $ cd [your package directory]
-$ git clone --recursive https://github.com/technoroad/ADI_IMU_TR_Driver_ROS2
+$ git clone --recursive -b [branch] https://github.com/technoroad/ADI_IMU_TR_Driver_ROS2
 $ cd [your workspace directory]
 $ rosdep update
 $ rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y

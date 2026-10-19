@@ -31,14 +31,26 @@ Documentation is organized by generation and communication protocol:
 
 See each platform's document for details.
 
+## Supported Environments
+
+Each ROS2 distribution has its own branch.
+The default branch does not build on every distribution.
+
+| OS | ROS2 | Branch |
+|----|------|--------|
+| Ubuntu 22.04 LTS | Humble | `humble` |
+| Ubuntu 24.04 LTS | Jazzy | `jazzy` |
+| Ubuntu 26.04 LTS | Lyrical | `lyrical` |
+
 ## Cloning and Updating
 
 The IMU library lives in the `lib/` git submodule, so it must be fetched
-together with the main repository.
+together with the main repository. Replace `<branch>` with the branch for
+your ROS2 distribution in [Supported Environments](#supported-environments).
 
 ```bash
 # First clone (fetch submodules at the same time)
-git clone --recurse-submodules <repo-url>
+git clone --recurse-submodules -b <branch> <repo-url>
 
 # Update an existing checkout
 git pull

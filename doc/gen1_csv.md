@@ -25,6 +25,7 @@ Driver for the TR-IMU1647X series, which communicates IMU data over CSV-formatte
 | Ubuntu 20.04 LTS | Foxy / Galactic | `foxy_galactic` | No longer maintained |
 | Ubuntu 22.04 LTS | Humble | `humble` | |
 | Ubuntu 24.04 LTS | Jazzy | `jazzy` | |
+| Ubuntu 26.04 LTS | Lyrical | `lyrical` | |
 
 ## Setup
 
@@ -51,9 +52,12 @@ After setting the switches, connect the sensor via USB.
 
 ### Install
 Navigate to the `src` directory of your workspace and run the following commands.
+Replace `[branch]` with the branch for your ROS2 distribution in
+[Supported Environments](#supported-environments) (e.g. `humble`).
+The default branch does not build on every distribution.
 ```
 $ cd [your workspace directory]/src
-$ git clone --recursive https://github.com/technoroad/ADI_IMU_TR_Driver_ROS2
+$ git clone --recursive -b [branch] https://github.com/technoroad/ADI_IMU_TR_Driver_ROS2
 $ cd [your workspace directory]
 $ rosdep update
 $ rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y
