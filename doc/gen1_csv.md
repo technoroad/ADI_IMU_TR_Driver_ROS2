@@ -52,12 +52,13 @@ After setting the switches, connect the sensor via USB.
 
 ### Install
 Navigate to the `src` directory of your workspace and run the following commands.
-Replace `[branch]` with the branch for your ROS2 distribution in
-[Supported Environments](#supported-environments) (e.g. `humble`).
+The command below clones the `jazzy` branch; for other ROS2
+distributions, use the branch listed in
+[Supported Environments](#supported-environments).
 The default branch does not build on every distribution.
 ```
 $ cd [your workspace directory]/src
-$ git clone --recursive -b [branch] https://github.com/technoroad/ADI_IMU_TR_Driver_ROS2
+$ git clone --recurse-submodules -b jazzy https://github.com/technoroad/ADI_IMU_TR_Driver_ROS2
 $ cd [your workspace directory]
 $ rosdep update
 $ rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y

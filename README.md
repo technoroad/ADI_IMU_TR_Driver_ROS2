@@ -45,12 +45,13 @@ The default branch does not build on every distribution.
 ## Cloning and Updating
 
 The IMU library lives in the `lib/` git submodule, so it must be fetched
-together with the main repository. Replace `<branch>` with the branch for
-your ROS2 distribution in [Supported Environments](#supported-environments).
+together with the main repository. The command below clones the `jazzy`
+branch; for other ROS2 distributions, use the branch listed in
+[Supported Environments](#supported-environments).
 
 ```bash
 # First clone (fetch submodules at the same time)
-git clone --recurse-submodules -b <branch> <repo-url>
+git clone --recurse-submodules -b jazzy https://github.com/technoroad/ADI_IMU_TR_Driver_ROS2
 
 # Update an existing checkout
 git pull
